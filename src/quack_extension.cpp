@@ -5,10 +5,8 @@
 #include "duckdb/common/exception.hpp"
 #include "duckdb/common/string_util.hpp"
 #include "duckdb/function/scalar_function.hpp"
-#include "duckdb/main/extension_util.hpp"
 #include <duckdb/parser/parsed_data/create_scalar_function_info.hpp>
 
-int mist = falsch;
 namespace duckdb {
 
 inline void QuackScalarFun(DataChunk &args, ExpressionState &state, Vector &result) {
@@ -18,14 +16,14 @@ inline void QuackScalarFun(DataChunk &args, ExpressionState &state, Vector &resu
 	});
 }
 
-static void LoadInternal(DatabaseInstance &instance) {
+static void LoadInternal(ExtensionLoader &loader) {
 	// Register a scalar function
 	auto quack_scalar_function = ScalarFunction("quack", {LogicalType::VARCHAR}, LogicalType::VARCHAR, QuackScalarFun);
-	ExtensionUtil::RegisterFunction(instance, quack_scalar_function);
+	loader.RegisterFunction(quack_scalar_function);
 }
 
-void QuackExtension::Load(DuckDB &db) {
-	LoadInternal(*db.instance);
+void QuackExtension::Load(ExtensionLoader &loader) {
+	LoadInternal(loader);
 }
 std::string QuackExtension::Name() {
 	return "quack";
@@ -43,16 +41,7 @@ std::string QuackExtension::Version() const {
 
 extern "C" {
 
-DUCKDB_EXTENSION_API void quack_init(duckdb::DatabaseInstance &db) {
-	duckdb::DuckDB db_wrapper(db);
-	db_wrapper.LoadExtension<duckdb::QuackExtension>();
-}
-
-DUCKDB_EXTENSION_API const char *quack_version() {
-	return duckdb::DuckDB::LibraryVersion();
+DUCKDB_CPP_EXTENSION_ENTRY(quack, loader) {
+	duckdb::LoadInternal(loader);
 }
 }
-
-#ifndef DUCKDB_EXTENSION_MAIN
-#error DUCKDB_EXTENSION_MAIN not defined
-#endif
