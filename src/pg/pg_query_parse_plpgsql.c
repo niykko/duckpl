@@ -15,7 +15,12 @@
 #include "postgres/include/nodes/nodeFuncs.h"
 #include "postgres/include/nodes/parsenodes.h"
 #include "postgres/include/nodes/nodes.h"
-
+#include "postgres/include/utils/palloc.h"
+#include <_string.h>
+#include <malloc/_malloc.h>
+#include "postgres/include/nodes/pg_list.h"
+#include "postgres/include/nodes/nodetags.h"
+#include "postgres/include/utils/elog.h"
 
 
 typedef struct {

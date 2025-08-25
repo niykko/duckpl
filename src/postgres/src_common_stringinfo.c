@@ -31,7 +31,8 @@
 
 #ifndef FRONTEND
 
-#include "postgres.h"
+#include "postgres/include/postgres.h"
+
 #include "utils/memutils.h"
 
 #else
@@ -43,7 +44,7 @@
 
 #endif
 
-#include "lib/stringinfo.h"
+#include "postgres/include/lib/stringinfo.h"
 
 
 /*
