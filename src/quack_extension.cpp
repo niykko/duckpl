@@ -6,11 +6,24 @@
 #include "duckdb/common/string_util.hpp"
 #include "duckdb/function/scalar_function.hpp"
 #include <duckdb/parser/parsed_data/create_scalar_function_info.hpp>
+#include "pg_query.h"
 
 namespace duckdb {
 
 inline void QuackScalarFun(DataChunk &args, ExpressionState &state, Vector &result) {
 	auto &name_vector = args.data[0];
+	/*PgQueryPlpgsqlParseResult presult;
+	presult = pg_query_parse_plpgsql(" \
+  CREATE OR REPLACE FUNCTION cs_fmt_browser_version(v_name varchar, \
+                                                  v_version varchar) \
+RETURNS varchar AS $$ \
+BEGIN \
+    IF v_version IS NULL THEN \
+        RETURN v_name; \
+    END IF; \
+    RETURN v_name || '/' || v_version; \
+END; \
+$$ LANGUAGE plpgsql;");*/
 	UnaryExecutor::Execute<string_t, string_t>(name_vector, result, args.size(), [&](string_t name) {
 		return StringVector::AddString(result, "Quack " + name.GetString() + " 🐥");
 	});
@@ -28,6 +41,7 @@ void QuackExtension::Load(ExtensionLoader &loader) {
 std::string QuackExtension::Name() {
 	return "quack";
 }
+
 
 std::string QuackExtension::Version() const {
 #ifdef EXT_VERSION_QUACK
