@@ -1,16 +1,22 @@
+#pragma once
 #include <stdio.h>
+#include "postgres/include/plpgsql.h"
+#include "../include/pg/pg_query.h"
 
-#include "../include/pg_query.h"
-#include "pg_query_internal.h"
-#include "pg_query_json_plpgsql.h"
+#include "pg/pg_query_internal.h"
+#include "pg/pg_query_json_plpgsql.h"
 
 #include <assert.h>
 
-#include <catalog/pg_type.h>
-#include <catalog/objectaddress.h>
-#include <catalog/pg_proc.h>
-#include <nodes/parsenodes.h>
-#include <nodes/nodeFuncs.h>
+#include "postgres/include/catalog/pg_type.h"
+#include "postgres/include/catalog/objectaddress.h"
+#include "postgres/include/catalog/pg_proc.h"
+
+#include "postgres/include/nodes/nodeFuncs.h"
+#include "postgres/include/nodes/parsenodes.h"
+#include "postgres/include/nodes/nodes.h"
+
+
 
 typedef struct {
 	PLpgSQL_function *func;
