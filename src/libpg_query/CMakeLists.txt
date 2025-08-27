@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.5...3.29)
 
 project(pl_pg_query CXX C)
+
 if(POLICY CMP0063)
     cmake_policy(SET CMP0063 NEW)
 endif()
+
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 add_library(pl_pg_query OBJECT
@@ -23,17 +25,19 @@ target_include_directories(
   PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
+# Avoid duplicate symbols with DuckDBs own pg parser
+# TODO: May change this later by renaming directly if nothing breaks. Needs to be done for every *global* definition!
 target_compile_definitions(pl_pg_query PRIVATE
         session_timezone=pl_session_timezone
         log_timezone=pl_log_timezone
 )
 
 
-#set_target_properties(pl_pg_query PROPERTIES
-#        EXPORT_NAME duckdb_pl_pg_query
-#        POSITION_INDEPENDENT_CODE ON
-#)
+set_target_properties(pl_pg_query PROPERTIES
+        EXPORT_NAME duckdb_pl_pg_query
+        POSITION_INDEPENDENT_CODE ON
+)
 
-#isable_target_warnings(pl_pg_query)
+#disable_target_warnings(pl_pg_query)
 
 
