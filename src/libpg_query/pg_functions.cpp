@@ -106,7 +106,7 @@ void pg_parser_init() {
 void pg_parser_parse(const char *query, parse_result *res) {
 	res->parse_tree = nullptr;
 	try {
-		res->parse_tree = duckdb_libpgquery::raw_parser(query);
+		res->parse_tree = duck_pl::raw_parser(query);
 		res->success = pg_parser_state.pg_err_code == PGUNDEFINED;
 	} catch (std::exception &ex) {
 		res->success = false;

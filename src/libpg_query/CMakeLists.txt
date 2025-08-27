@@ -6,7 +6,7 @@ if(POLICY CMP0063)
 endif()
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
-add_library(pl_pg_query STATIC
+add_library(pl_pg_query OBJECT
             postgres_parser.cpp
             pg_functions.cpp
             src_backend_parser_parser.cpp
@@ -20,12 +20,20 @@ add_library(pl_pg_query STATIC
 
 target_include_directories(
   pl_pg_query
-  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
-set_target_properties(pl_pg_query PROPERTIES
-        EXPORT_NAME duckdb_pl_pg_query
-        POSITION_INDEPENDENT_CODE ON
+  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
 
-disable_target_warnings(pl_pg_query)
+target_compile_definitions(pl_pg_query PRIVATE
+        session_timezone=pl_session_timezone
+        log_timezone=pl_log_timezone
+)
+
+
+#set_target_properties(pl_pg_query PROPERTIES
+#        EXPORT_NAME duckdb_pl_pg_query
+#        POSITION_INDEPENDENT_CODE ON
+#)
+
+#isable_target_warnings(pl_pg_query)
 
 

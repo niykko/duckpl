@@ -14,22 +14,22 @@
 #include "pg_simplified_token.hpp"
 #include "duckdb/common/vector.hpp"
 
-namespace duckdb {
+namespace duck_pl {
 class PostgresParser {
 public:
 	PostgresParser();
 	~PostgresParser();
 
 	bool success;
-	duckdb_libpgquery::PGList *parse_tree;
+	duck_pl::PGList *parse_tree;
 	std::string error_message;
 	int error_location;
 public:
 	void Parse(const std::string &query);
-	static duckdb::vector<duckdb_libpgquery::PGSimplifiedToken> Tokenize(const std::string &query);
+	static duckdb::vector<duck_pl::PGSimplifiedToken> Tokenize(const std::string &query);
 
-	static duckdb_libpgquery::PGKeywordCategory IsKeyword(const std::string &text);
-	static duckdb::vector<duckdb_libpgquery::PGKeyword> KeywordList();
+	static duck_pl::PGKeywordCategory IsKeyword(const std::string &text);
+	static duckdb::vector<duck_pl::PGKeyword> KeywordList();
 
 	static void SetPreserveIdentifierCase(bool downcase);
 };

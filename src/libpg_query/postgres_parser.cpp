@@ -5,14 +5,14 @@
 #include "parser/scansup.hpp"
 #include "common/keywords.hpp"
 
-namespace duckdb {
+namespace duck_pl {
 
 PostgresParser::PostgresParser() : success(false), parse_tree(nullptr), error_message(""), error_location(0) {}
 
 void PostgresParser::Parse(const std::string &query) {
-	duckdb_libpgquery::pg_parser_init();
-	duckdb_libpgquery::parse_result res;
-	pg_parser_parse(query.c_str(), &res);
+	duck_pl::pg_parser_init();
+	duck_pl::parse_result res;
+	duck_pl::pg_parser_parse(query.c_str(), &res);
 	success = res.success;
 
 	if (success) {
@@ -23,29 +23,29 @@ void PostgresParser::Parse(const std::string &query) {
 	}
 }
 
-vector<duckdb_libpgquery::PGSimplifiedToken> PostgresParser::Tokenize(const std::string &query) {
-	duckdb_libpgquery::pg_parser_init();
-	auto tokens = duckdb_libpgquery::tokenize(query.c_str());
-	duckdb_libpgquery::pg_parser_cleanup();
+duckdb::vector<duck_pl::PGSimplifiedToken> PostgresParser::Tokenize(const std::string &query) {
+	duck_pl::pg_parser_init();
+	auto tokens = duck_pl::tokenize(query.c_str());
+	duck_pl::pg_parser_cleanup();
 	return std::move(tokens);
 }
 
 PostgresParser::~PostgresParser()  {
-    duckdb_libpgquery::pg_parser_cleanup();
+    duck_pl::pg_parser_cleanup();
 }
 
-duckdb_libpgquery::PGKeywordCategory PostgresParser::IsKeyword(const std::string &text) {
-	return duckdb_libpgquery::is_keyword(text.c_str());
+duck_pl::PGKeywordCategory PostgresParser::IsKeyword(const std::string &text) {
+	return duck_pl::is_keyword(text.c_str());
 }
 
-vector<duckdb_libpgquery::PGKeyword> PostgresParser::KeywordList() {
+duckdb::vector<duck_pl::PGKeyword> PostgresParser::KeywordList() {
 	// FIXME: because of this, we might need to change the libpg_query library to use duckdb::vector
-	vector<duckdb_libpgquery::PGKeyword> tmp(duckdb_libpgquery::keyword_list());
+	duckdb::vector<duck_pl::PGKeyword> tmp(duck_pl::keyword_list());
 	return tmp;
 }
 
 void PostgresParser::SetPreserveIdentifierCase(bool preserve) {
-	duckdb_libpgquery::set_preserve_identifier_case(preserve);
+	duck_pl::set_preserve_identifier_case(preserve);
 }
 
 }
