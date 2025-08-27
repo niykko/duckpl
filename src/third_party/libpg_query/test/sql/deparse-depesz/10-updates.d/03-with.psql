@@ -1,4 +1,0 @@
-UPDATE a al
-SET b = x.w
-FROM whatever x
-WHERE al.id = x.id

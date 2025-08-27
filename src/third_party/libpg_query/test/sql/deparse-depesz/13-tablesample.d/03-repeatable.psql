@@ -1,2 +1,0 @@
-SELECT *
-FROM pg_class TABLESAMPLE system(5) REPEATABLE (123.5)
