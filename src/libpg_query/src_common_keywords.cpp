@@ -36,7 +36,7 @@ namespace duckdb_base_std {
 
 #include "parser/kwlist.hpp"
 
-namespace duckdb_libpgquery {
+namespace duck_pl {
 
 /*
  * ScanKeywordLookup - see if a given word is a keyword

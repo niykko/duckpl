@@ -34,7 +34,7 @@
 #include <zos-tls.h>
 #endif
 
-namespace duckdb_libpgquery {
+namespace duck_pl {
 
 /* ----------------
  *		scanstr

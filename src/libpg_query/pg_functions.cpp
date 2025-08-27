@@ -15,7 +15,7 @@
 // max parse tree size approx 100 MB, should be enough
 #define PG_MALLOC_SIZE 10240
 
-namespace duckdb_libpgquery {
+namespace duck_pl {
 
 typedef struct pg_parser_state_str parser_state;
 struct pg_parser_state_str {

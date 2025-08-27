@@ -17,7 +17,7 @@
 #include "nodes/parsenodes.hpp"
 #include "pg_simplified_token.hpp"
 #include <vector>
-namespace duckdb_libpgquery {
+namespace duck_pl {
 
 typedef enum PGBackslashQuoteType {
 	PG_BACKSLASH_QUOTE_OFF,

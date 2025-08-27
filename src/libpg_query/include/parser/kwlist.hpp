@@ -1,5 +1,5 @@
 
-namespace duckdb_libpgquery {
+namespace duck_pl {
 #define PG_KEYWORD(a,b,c) {a,b,c},
 
 const PGScanKeyword ScanKeywords[] = {

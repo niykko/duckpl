@@ -11,7 +11,7 @@
  *-------------------------------------------------------------------------
  */
 #pragma once
-namespace duckdb_libpgquery {
+namespace duck_pl {
 
 /*
  * This enum represents the different strengths of FOR UPDATE/SHARE clauses.
