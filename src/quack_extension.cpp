@@ -12,9 +12,11 @@ namespace duckdb {
 
 inline void QuackScalarFun(DataChunk &args, ExpressionState &state, Vector &result) {
 	auto &name_vector = args.data[0];
+	std::string query = "SELECT * FROM range(1)";
 	duck_pl::PostgresParser parsi;
 	UnaryExecutor::Execute<string_t, string_t>(name_vector, result, args.size(), [&](string_t name) {
-		return StringVector::AddString(result, "Quack " + name.GetString() + " 🐥");
+		parsi.Parse(name.GetString());
+		return StringVector::AddString(result, "Quack " + name.GetString() + " 🐥" + " query succ: " + to_string(parsi.success));
 	});
 }
 
